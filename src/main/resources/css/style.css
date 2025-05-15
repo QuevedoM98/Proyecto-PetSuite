@@ -1,0 +1,91 @@
+/* Botón principal */
+.button {
+    -fx-background-color: #1b5e20; /* Verde oscuro */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-border-radius: 8px; /* Bordes redondeados */
+    -fx-background-radius: 8px; /* Fondo redondeado */
+    -fx-padding: 12px 24px; /* Espaciado interno */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: 'Segoe UI', sans-serif; /* Fuente moderna */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.0, 0, 4); /* Sombra */
+    -fx-transition: all 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Efecto hover para el botón principal */
+.button:hover {
+    -fx-background-color: #2e7d32; /* Verde más claro */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.0, 0, 5); /* Sombra más intensa */
+}
+
+/* Botón claro */
+.button-light {
+    -fx-background-color: #e8f5e9; /* Verde muy claro */
+    -fx-text-fill: #1b5e20; /* Texto verde oscuro */
+    -fx-border-radius: 8px; /* Bordes redondeados */
+    -fx-background-radius: 8px; /* Fondo redondeado */
+    -fx-padding: 12px 24px; /* Espaciado interno */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: 'Segoe UI', sans-serif; /* Fuente moderna */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.0, 0, 4); /* Sombra */
+    -fx-transition: all 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Efecto hover para el botón claro */
+.button-light:hover {
+    -fx-background-color: #c8e6c9; /* Verde claro */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.0, 0, 5); /* Sombra más intensa */
+}
+
+/* Efecto al hacer clic */
+.button:pressed, .button-light:pressed {
+    -fx-background-color: #145a1f; /* Verde más oscuro */
+    -fx-effect: none; /* Sin sombra */
+    -fx-translate-y: 2px; /* Simula presión */
+}
+
+/* Botón moderno actualizado */
+.button-modern {
+    -fx-background-color: #007d8f; /* Color principal */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-background-radius: 10px; /* Fondo redondeado */
+    -fx-padding: 12px 24px; /* Espaciado interno */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-font-size: 18px; /* Tamaño de fuente aumentado */
+    -fx-font-family: 'Segoe UI', sans-serif; /* Fuente moderna */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.0, 0, 4); /* Sombra ligera */
+    -fx-transition: all 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Efecto hover para el botón moderno */
+.button-modern:hover {
+    -fx-background-color: #0095a5; /* Color más claro al pasar el ratón */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.0, 0, 5); /* Sombra más intensa */
+}
+
+/* Efecto al hacer clic */
+.button-modern:pressed {
+    -fx-background-color: #005f6b; /* Color más oscuro al presionar */
+    -fx-effect: none; /* Sin sombra */
+    -fx-translate-y: 2px; /* Simula presión */
+}
+
+/* Estilo para el texto de "Atrás" actualizado */
+.text-back {
+    -fx-text-fill: #007d8f; /* Color principal (igual que el botón moderno) */
+    -fx-font-size: 22px; /* Tamaño de fuente aumentado */
+    -fx-font-family: 'Segoe UI', sans-serif; /* Fuente moderna */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-cursor: hand; /* Cambiar el cursor al pasar el ratón */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.0, 0, 2); /* Sombra ligera */
+    -fx-transition: all 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Efecto hover para el texto de "Atrás" */
+.text-back:hover {
+    -fx-text-fill: #005f6b; /* Color más oscuro al pasar el ratón */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0.0, 0, 3); /* Sombra más intensa */
+    -fx-underline: true; /* Subrayado al pasar el ratón */
+}

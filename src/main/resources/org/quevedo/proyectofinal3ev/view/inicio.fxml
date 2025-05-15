@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.proyectofinal3ev.view.WelcomeController">
+   <children>
+      <ImageView fitHeight="1105.0" fitWidth="1977.0" layoutX="-29.0" layoutY="-15.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/pantallainicio.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnRegistro" layoutX="1100.0" layoutY="558.0" mnemonicParsing="false" onAction="#cambiarPantallaRegistro" prefHeight="92.0" prefWidth="245.0" styleClass="button-modern" stylesheets="@../../../../css/style.css" text="Registrar">
+         <font>
+            <Font size="42.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnIniciarSesion" layoutX="558.0" layoutY="558.0" mnemonicParsing="false" onAction="#cambiarPantallaSesion" prefHeight="92.0" prefWidth="245.0" styleClass="button-modern" stylesheets="@../../../../css/style.css" text="Inicio Sesión">
+         <font>
+            <Font size="42.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
