@@ -1,22 +1,55 @@
 package org.quevedo.proyectofinal3ev.model;
 
+import java.util.List;
+
 public class Usuario {
+    public enum TipoUsuario {
+        DUENO, VETERINARIA, PELUQUERIA
+    }
+
     private int id;
     private String nombreUsuario;
     private String password;
+    private String email;
+    private TipoUsuario tipoUsuario;
+    private List<Mascota> mascotas;
+    private List<VisitaVeterinaria> visitasVeterinarias;
+    private List<ServicioPeluqueria> serviciosPeluqueria;
 
-    // Constructor por defecto
     public Usuario() {
     }
 
-    // Constructor parametrizado
-    public Usuario(int id, String nombreUsuario, String password) {
-        this.id = id;
+    public Usuario(String nombreUsuario, String password, String email, TipoUsuario tipoUsuario) {
         this.nombreUsuario = nombreUsuario;
         this.password = password;
+        this.email = email;
+        this.tipoUsuario = tipoUsuario;
     }
 
-    // Getters y setters
+    public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
+    }
+
+    public List<VisitaVeterinaria> getVisitasVeterinarias() {
+        return visitasVeterinarias;
+    }
+
+    public void setVisitasVeterinarias(List<VisitaVeterinaria> visitasVeterinarias) {
+        this.visitasVeterinarias = visitasVeterinarias;
+    }
+
+    public List<ServicioPeluqueria> getServiciosPeluqueria() {
+        return serviciosPeluqueria;
+    }
+
+    public void setServiciosPeluqueria(List<ServicioPeluqueria> serviciosPeluqueria) {
+        this.serviciosPeluqueria = serviciosPeluqueria;
+    }
+
     public int getId() {
         return id;
     }
@@ -41,12 +74,28 @@ public class Usuario {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
                 ", nombreUsuario='" + nombreUsuario + '\'' +
-                ", password='[PROTECTED]'" +
+                ", tipoUsuario=" + tipoUsuario +
                 '}';
     }
 }

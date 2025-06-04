@@ -5,8 +5,28 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.InputStream;
 
 public class XMLManager {
+
+    public static ConnectionProperties readXML() {
+        try {
+            JAXBContext context = JAXBContext.newInstance(ConnectionProperties.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+
+            // Cargar el archivo connection.xml desde los recursos
+            InputStream inputStream = XMLManager.class.getResourceAsStream("connection.xml");
+            if (inputStream == null) {
+                throw new IllegalArgumentException("connection.xml no encontrado en los recursos.");
+            }
+
+            return (ConnectionProperties) unmarshaller.unmarshal(inputStream);
+        } catch (JAXBException | IllegalArgumentException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al leer el archivo connection.xml", e);
+        }
+    }
+
     public static <T> boolean writeXML(T objeto, String fileName){
         boolean result = false;
 

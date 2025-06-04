@@ -8,12 +8,12 @@ public class ServicioPeluqueria implements Servicio {
     private String tipoServicio;
     private double precio;
     private Mascota mascota;
-    private Peluqueria peluqueria;
+    private Usuario peluqueria; // Cambiado a Usuario
 
     public ServicioPeluqueria() {
     }
 
-    public ServicioPeluqueria(int id, LocalDate fecha, String tipoServicio, double precio, Mascota mascota, Peluqueria peluqueria) {
+    public ServicioPeluqueria(int id, LocalDate fecha, String tipoServicio, double precio, Mascota mascota, Usuario peluqueria) {
         this.id = id;
         this.fecha = fecha;
         this.tipoServicio = tipoServicio;
@@ -62,11 +62,11 @@ public class ServicioPeluqueria implements Servicio {
         this.mascota = mascota;
     }
 
-    public Peluqueria getPeluqueria() {
+    public Usuario getPeluqueria() {
         return peluqueria;
     }
 
-    public void setPeluqueria(Peluqueria peluqueria) {
+    public void setPeluqueria(Usuario peluqueria) {
         this.peluqueria = peluqueria;
     }
 

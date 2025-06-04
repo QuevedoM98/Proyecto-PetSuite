@@ -8,13 +8,12 @@ public class Mascota {
     private String especie;
     private String raza;
     private LocalDate fechaNacimiento;
-    private DuenioMascota duenioMascota;
+    private Usuario duenioMascota;
 
     public Mascota() {
     }
 
-    public Mascota(int id, String nombre, String especie, String raza, LocalDate fechaNacimiento, DuenioMascota duenioMascota) {
-        this.id = id;
+    public Mascota(String nombre, String especie, String raza, LocalDate fechaNacimiento, Usuario duenioMascota) {
         this.nombre = nombre;
         this.especie = especie;
         this.raza = raza;
@@ -63,10 +62,10 @@ public class Mascota {
     }
 
     public int getDuenio() {
-        return duenioMascota != null ? duenioMascota.getId() : 0; // Corregido: devolver el ID del dueño
+        return duenioMascota != null ? duenioMascota.getId() : 0; // Devolver el ID del dueño
     }
 
-    public void setDuenio(DuenioMascota duenioMascota) {
+    public void setDuenio(Usuario duenioMascota) {
         this.duenioMascota = duenioMascota;
     }
 }

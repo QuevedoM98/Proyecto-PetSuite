@@ -8,12 +8,12 @@ public class VisitaVeterinaria implements Servicio {
     private String motivo;
     private String observaciones;
     private Mascota mascota;
-    private Veterinaria veterinaria;
+    private Usuario veterinaria; // Cambiado a Usuario
 
     public VisitaVeterinaria() {
     }
 
-    public VisitaVeterinaria(int id, LocalDate fecha, String motivo, String observaciones, Mascota mascota, Veterinaria veterinaria) {
+    public VisitaVeterinaria(int id, LocalDate fecha, String motivo, String observaciones, Mascota mascota, Usuario veterinaria) {
         this.id = id;
         this.fecha = fecha;
         this.motivo = motivo;
@@ -62,11 +62,11 @@ public class VisitaVeterinaria implements Servicio {
         this.mascota = mascota;
     }
 
-    public Veterinaria getVeterinaria() {
+    public Usuario getVeterinaria() {
         return veterinaria;
     }
 
-    public void setVeterinaria(Veterinaria veterinaria) {
+    public void setVeterinaria(Usuario veterinaria) {
         this.veterinaria = veterinaria;
     }
 

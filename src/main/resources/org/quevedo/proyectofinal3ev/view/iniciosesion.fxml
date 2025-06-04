@@ -10,14 +10,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.proyectofinal3ev.view.RegistroController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.proyectofinal3ev.view.InicioSesionController">
     <children>
         <ImageView fitHeight="728.0" fitWidth="1305.0" layoutX="295.0" layoutY="117.0" pickOnBounds="true">
             <image>
                 <Image url="@images/pantallalogin.png" />
             </image>
         </ImageView>
-        <Button fx:id="btnRegristrar" layoutX="1038.0" layoutY="714.0" mnemonicParsing="false" onAction="#registrarme" prefHeight="77.0" prefWidth="165.0" styleClass="button-modern" stylesheets="@../../../../css/style.css" text="Iniciar Sesión">
+        <Button fx:id="btnIniciarSesion" layoutX="1038.0" layoutY="714.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="77.0" prefWidth="165.0" styleClass="button-modern" stylesheets="@../../../../css/style.css" text="Iniciar Sesión">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -30,7 +30,7 @@
                 <Font size="43.0" />
             </font>
         </Text>
-        <Text fx:id="btnIniciarSesion" fill="#007d8f" layoutX="1304.0" layoutY="267.0" onMouseClicked="#cambiarAtras" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-back" text="Registro">
+        <Text fx:id="irRegistro" fill="#007d8f" layoutX="1304.0" layoutY="267.0" onMouseClicked="#cambiarAtras" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-back" text="Registro">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
