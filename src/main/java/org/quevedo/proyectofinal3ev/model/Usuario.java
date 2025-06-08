@@ -2,7 +2,7 @@ package org.quevedo.proyectofinal3ev.model;
 
 import java.util.List;
 
-public class Usuario {
+public class Usuario extends Persona{
     public enum TipoUsuario {
         DUENO, VETERINARIA, PELUQUERIA
     }

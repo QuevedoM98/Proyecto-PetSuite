@@ -18,12 +18,12 @@
                 <Image url="@images/pantallaRegistroNueva.png" />
             </image>
         </ImageView>
-        <Button fx:id="btnRegristrar" layoutX="1163.0" layoutY="726.0" mnemonicParsing="false" onAction="#registrarme" prefHeight="77.0" prefWidth="165.0" styleClass="button-modern" stylesheets="@../../../../css/style.css" text="Registrarme">
+        <Button fx:id="btnRegristrar" layoutX="1246.0" layoutY="728.0" mnemonicParsing="false" onAction="#registrarme" prefHeight="77.0" prefWidth="165.0" styleClass="button-modern" stylesheets="@../../../../css/style.css" text="Registrarme">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Text fx:id="btnAtras" fill="#007d8f" layoutX="1456.0" layoutY="774.0" onMouseClicked="#cambiarAtras" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-back" text="Atrás" wrappingWidth="63.09521484375">
+        <Text fx:id="btnAtras" fill="#007d8f" layoutX="1039.0" layoutY="767.0" onMouseClicked="#cambiarAtras" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-back" text="Atrás" wrappingWidth="63.09521484375">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>

@@ -10,4 +10,5 @@ module org.quevedo.proyectofinal3ev {
     opens org.quevedo.proyectofinal3ev.basedatos to javafx.fxml, java.xml.bind;
     opens org.quevedo.proyectofinal3ev.view to javafx.fxml;
     opens org.quevedo.proyectofinal3ev.controller to javafx.fxml;
+    opens org.quevedo.proyectofinal3ev.model to javafx.base; // Línea añadida
 }

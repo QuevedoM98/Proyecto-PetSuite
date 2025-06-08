@@ -13,8 +13,8 @@ public class ServicioPeluqueria implements Servicio {
     public ServicioPeluqueria() {
     }
 
-    public ServicioPeluqueria(int id, LocalDate fecha, String tipoServicio, double precio, Mascota mascota, Usuario peluqueria) {
-        this.id = id;
+    public ServicioPeluqueria(LocalDate fecha, String tipoServicio, double precio, Mascota mascota, Usuario peluqueria) {
+
         this.fecha = fecha;
         this.tipoServicio = tipoServicio;
         this.precio = precio;
@@ -73,5 +73,13 @@ public class ServicioPeluqueria implements Servicio {
     @Override
     public void realizarServicio() {
         System.out.println("Realizando servicio de peluquería: " + tipoServicio + " para la mascota: " + mascota.getNombre());
+    }
+
+    public void setIdMascota(int id) {
+        if (mascota != null) {
+            mascota.setId(id);
+        } else {
+            System.out.println("No se puede establecer el ID de la mascota porque es nula.");
+        }
     }
 }

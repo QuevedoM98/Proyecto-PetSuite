@@ -44,7 +44,6 @@ public class DatabaseTest {
 
             // Insertar servicio de peluquería
             ServicioPeluqueria nuevoServicio = new ServicioPeluqueria(
-                    0,
                     LocalDate.now(),
                     "Baño y corte",
                     30.0,
@@ -60,7 +59,6 @@ public class DatabaseTest {
 
             // Insertar visita veterinaria
             VisitaVeterinaria nuevaVisita = new VisitaVeterinaria(
-                    0,
                     LocalDate.now(),
                     "Vacunación",
                     "Vacuna contra la rabia aplicada.",

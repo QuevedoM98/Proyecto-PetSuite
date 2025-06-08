@@ -13,8 +13,7 @@ public class VisitaVeterinaria implements Servicio {
     public VisitaVeterinaria() {
     }
 
-    public VisitaVeterinaria(int id, LocalDate fecha, String motivo, String observaciones, Mascota mascota, Usuario veterinaria) {
-        this.id = id;
+    public VisitaVeterinaria(LocalDate fecha, String motivo, String observaciones, Mascota mascota, Usuario veterinaria) {
         this.fecha = fecha;
         this.motivo = motivo;
         this.observaciones = observaciones;

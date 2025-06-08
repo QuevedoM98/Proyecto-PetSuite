@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.proyectofinal3ev.view.DuenoController">
+    <children>
+        <ImageView fx:id="backgroundImage" fitHeight="720.0" fitWidth="1305.0" layoutX="315.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/fondo-dueno.png" />
+            </image>
+        </ImageView>
+
+        <!-- Título y tabla de mascotas -->
+        <Label layoutX="744.0" layoutY="200.0" styleClass="text-back" text="Mis mascotas" />
+        <TableView fx:id="tableMascotas" layoutX="744.0" layoutY="225.0" prefHeight="89.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="colNombre" prefWidth="150.0" text="Nombre" />
+                <TableColumn fx:id="colEspecie" prefWidth="150.0" text="Especie" />
+                <TableColumn fx:id="colRaza" prefWidth="150.0" text="Raza" />
+                <TableColumn fx:id="colFechaNacimiento" prefWidth="200.0" text="Fecha Nacimiento" />
+            </columns>
+        </TableView>
+
+        <!-- Título y tabla de historial de visitas -->
+        <Label layoutX="744.0" layoutY="331.0" styleClass="text-back" text="Historial de Visitas" />
+        <TableView fx:id="tableHistorialVisitas" layoutX="744.0" layoutY="365.0" prefHeight="124.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colFechaVisita" prefWidth="150.0" text="Fecha" />
+                <TableColumn fx:id="colMotivoVisita" prefWidth="300.0" text="Motivo" />
+                <TableColumn fx:id="colObservacionesVisita" prefWidth="350.0" text="Observaciones" />
+            </columns>
+        </TableView>
+
+        <!-- Título y tabla de próximas visitas -->
+        <Label layoutX="744.0" layoutY="508.0" styleClass="text-back" text="Próximas Visitas" />
+        <TableView fx:id="tableProximasVisitas" layoutX="744.0" layoutY="535.0" prefHeight="124.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colFechaProximaVisita" prefWidth="150.0" text="Fecha" />
+                <TableColumn fx:id="colTipoProximaVisita" prefWidth="300.0" text="Tipo" />
+                <TableColumn fx:id="colDescripcionProximaVisita" prefWidth="350.0" text="Descripción" />
+            </columns>
+        </TableView>
+
+        <!-- Título y tabla de futuras citas de peluquería -->
+        <Label layoutX="744.0" layoutY="678.0" styleClass="text-back" text="Futuras Citas de Peluquería" />
+        <TableView fx:id="tableFuturasCitasPeluqueria" layoutX="744.0" layoutY="705.0" prefHeight="124.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colFechaCitaPeluqueria" prefWidth="150.0" text="Fecha" />
+                <TableColumn fx:id="colTipoCitaPeluqueria" prefWidth="300.0" text="Tipo" />
+                <TableColumn fx:id="colDescripcionCitaPeluqueria" prefWidth="350.0" text="Descripción" />
+            </columns>
+        </TableView>
+
+        <!-- Botones para acciones -->
+        <Button fx:id="btnAgregarMascota" layoutX="365.0" layoutY="196.0" onAction="#agregarMascota" prefWidth="280.0" styleClass="button-modern" text="Agregar Mascota" />
+        <Button fx:id="btnEliminarMascota" layoutX="365.0" layoutY="266.0" onAction="#eliminarMascota" prefWidth="280.0" styleClass="button-modern" text="Eliminar Mascota" />
+        <Button fx:id="btnModificarMascota" layoutX="365.0" layoutY="336.0" onAction="#modificarMascota" prefWidth="280.0" styleClass="button-modern" text="Modificar Mascota" />
+        <Button fx:id="btnAgregarCitaVeterinaria" layoutX="365.0" layoutY="406.0" onAction="#agregarCitaVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Agregar Cita Veterinaria" />
+        <Button fx:id="btnModificarCitaVeterinaria" layoutX="365.0" layoutY="476.0" onAction="#modificarCitaVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Modificar Cita Veterinaria" />
+        <Button fx:id="btnEliminarCitaVeterinaria" layoutX="365.0" layoutY="546.0" onAction="#eliminarCitaVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Eliminar Cita Veterinaria" />
+        <Button fx:id="btnAgregarCitaPeluqueria" layoutX="365.0" layoutY="616.0" onAction="#agregarCitaPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Agregar Cita Peluquería" />
+        <Button fx:id="btnModificarCitaPeluqueria" layoutX="365.0" layoutY="686.0" onAction="#modificarCitaPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Modificar Cita Peluquería" />
+        <Button fx:id="btnEliminarCitaPeluqueria" layoutX="365.0" layoutY="756.0" onAction="#eliminarCitaPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Eliminar Cita Peluquería" />
+        <Button fx:id="btnSalir" layoutX="1366.0" layoutY="145.0" onAction="#salirAplicacion" prefWidth="150.0" styleClass="button-modern" text="Salir" />
+    </children>
+</AnchorPane>
