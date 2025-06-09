@@ -1,6 +1,7 @@
 package org.quevedo.proyectofinal3ev.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ServicioPeluqueria implements Servicio {
     private int id;
@@ -9,6 +10,8 @@ public class ServicioPeluqueria implements Servicio {
     private double precio;
     private Mascota mascota;
     private Usuario peluqueria; // Cambiado a Usuario
+    private LocalDateTime fechaHora;
+
 
     public ServicioPeluqueria() {
     }
@@ -36,6 +39,14 @@ public class ServicioPeluqueria implements Servicio {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
     }
 
     public String getTipoServicio() {

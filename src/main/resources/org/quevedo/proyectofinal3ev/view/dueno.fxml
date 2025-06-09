@@ -58,16 +58,11 @@
             </columns>
         </TableView>
 
-        <!-- Botones para acciones -->
-        <Button fx:id="btnAgregarMascota" layoutX="365.0" layoutY="196.0" onAction="#agregarMascota" prefWidth="280.0" styleClass="button-modern" text="Agregar Mascota" />
-        <Button fx:id="btnEliminarMascota" layoutX="365.0" layoutY="266.0" onAction="#eliminarMascota" prefWidth="280.0" styleClass="button-modern" text="Eliminar Mascota" />
-        <Button fx:id="btnModificarMascota" layoutX="365.0" layoutY="336.0" onAction="#modificarMascota" prefWidth="280.0" styleClass="button-modern" text="Modificar Mascota" />
-        <Button fx:id="btnAgregarCitaVeterinaria" layoutX="365.0" layoutY="406.0" onAction="#agregarCitaVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Agregar Cita Veterinaria" />
-        <Button fx:id="btnModificarCitaVeterinaria" layoutX="365.0" layoutY="476.0" onAction="#modificarCitaVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Modificar Cita Veterinaria" />
-        <Button fx:id="btnEliminarCitaVeterinaria" layoutX="365.0" layoutY="546.0" onAction="#eliminarCitaVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Eliminar Cita Veterinaria" />
-        <Button fx:id="btnAgregarCitaPeluqueria" layoutX="365.0" layoutY="616.0" onAction="#agregarCitaPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Agregar Cita Peluquería" />
-        <Button fx:id="btnModificarCitaPeluqueria" layoutX="365.0" layoutY="686.0" onAction="#modificarCitaPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Modificar Cita Peluquería" />
-        <Button fx:id="btnEliminarCitaPeluqueria" layoutX="365.0" layoutY="756.0" onAction="#eliminarCitaPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Eliminar Cita Peluquería" />
+        <!-- Botones para acciones estilo veterinaria/peluquería -->
+        <Button fx:id="btnGestionarMascotas" layoutX="365.0" layoutY="326.0" onAction="#gestionarMascotas" prefWidth="280.0" styleClass="button-modern" text="Gestionar Mascotas" />
+        <Button fx:id="btnGestionarCitasVeterinaria" layoutX="365.0" layoutY="416.0" onAction="#gestionarCitasVeterinaria" prefWidth="280.0" styleClass="button-modern" text="Gestionar Citas Veterinaria" />
+        <Button fx:id="btnGestionarCitasPeluqueria" layoutX="365.0" layoutY="506.0" onAction="#gestionarCitasPeluqueria" prefWidth="280.0" styleClass="button-modern" text="Gestionar Citas Peluquería" />
+        <Button fx:id="btnHistorialMascota" layoutX="365.0" layoutY="596.0" onAction="#mostrarHistorialMascota" prefWidth="280.0" styleClass="button-modern" text="Historial de Mascota" />
         <Button fx:id="btnSalir" layoutX="1366.0" layoutY="145.0" onAction="#salirAplicacion" prefWidth="150.0" styleClass="button-modern" text="Salir" />
     </children>
 </AnchorPane>

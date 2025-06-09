@@ -1,6 +1,7 @@
 package org.quevedo.proyectofinal3ev.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class VisitaVeterinaria implements Servicio {
     private int id;
@@ -9,6 +10,7 @@ public class VisitaVeterinaria implements Servicio {
     private String observaciones;
     private Mascota mascota;
     private Usuario veterinaria; // Cambiado a Usuario
+    private LocalDateTime fechaHora; // Fecha con hora
 
     public VisitaVeterinaria() {
     }
@@ -35,6 +37,14 @@ public class VisitaVeterinaria implements Servicio {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
     }
 
     public String getMotivo() {

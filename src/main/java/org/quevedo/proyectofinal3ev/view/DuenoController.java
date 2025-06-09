@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class DuenoController extends Controller implements Initializable {
 
@@ -531,5 +533,168 @@ public class DuenoController extends Controller implements Initializable {
         } else {
             mostrarAlerta("Por favor, seleccione una cita para eliminar.");
         }
+    }
+
+    @FXML
+    private void gestionarMascotas() {
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Mascota",
+                "Agregar Mascota", "Modificar Mascota", "Eliminar Mascota");
+        dialog.setTitle("Gestión de Mascotas");
+        dialog.setHeaderText("Elige una acción para tus mascotas");
+        dialog.setContentText("Acción:");
+
+        dialog.showAndWait().ifPresent(opcion -> {
+            switch (opcion) {
+                case "Agregar Mascota":
+                    agregarMascota();
+                    break;
+                case "Modificar Mascota":
+                    modificarMascota();
+                    break;
+                case "Eliminar Mascota":
+                    eliminarMascota();
+                    break;
+            }
+        });
+    }
+
+    @FXML
+    private void gestionarCitasVeterinaria() {
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Cita Veterinaria",
+                "Agregar Cita Veterinaria", "Modificar Cita Veterinaria", "Eliminar Cita Veterinaria");
+        dialog.setTitle("Gestión de Citas Veterinaria");
+        dialog.setHeaderText("Elige una acción para tus citas veterinarias");
+        dialog.setContentText("Acción:");
+
+        dialog.showAndWait().ifPresent(opcion -> {
+            switch (opcion) {
+                case "Agregar Cita Veterinaria":
+                    agregarCitaVeterinaria();
+                    break;
+                case "Modificar Cita Veterinaria":
+                    modificarCitaVeterinaria();
+                    break;
+                case "Eliminar Cita Veterinaria":
+                    eliminarCitaVeterinaria();
+                    break;
+            }
+        });
+    }
+
+    @FXML
+    private void gestionarCitasPeluqueria() {
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Cita Peluquería",
+                "Agregar Cita Peluquería", "Modificar Cita Peluquería", "Eliminar Cita Peluquería");
+        dialog.setTitle("Gestión de Citas Peluquería");
+        dialog.setHeaderText("Elige una acción para tus citas de peluquería");
+        dialog.setContentText("Acción:");
+
+        dialog.showAndWait().ifPresent(opcion -> {
+            switch (opcion) {
+                case "Agregar Cita Peluquería":
+                    agregarCitaPeluqueria();
+                    break;
+                case "Modificar Cita Peluquería":
+                    modificarCitaPeluqueria();
+                    break;
+                case "Eliminar Cita Peluquería":
+                    eliminarCitaPeluqueria();
+                    break;
+            }
+        });
+    }
+
+    @FXML
+    private void mostrarHistorialMascota() {
+        Mascota mascotaSeleccionada = tableMascotas.getSelectionModel().getSelectedItem();
+        if (mascotaSeleccionada == null) {
+            mostrarAlerta("Por favor, selecciona una mascota para ver su historial.");
+            return;
+        }
+
+        // Obtener citas veterinarias y de peluquería
+        List<VisitaVeterinaria> visitasVet = VisitaVeterinariaDAO.getVisitasByMascotaId(mascotaSeleccionada.getId());
+        List<ServicioPeluqueria> citasPelu = ServicioPeluqueriaDAO.getServiciosByMascotaId(mascotaSeleccionada.getId());
+
+        // Crear tabla combinada
+        TableView<Object> tablaHistorial = new TableView<>();
+        tablaHistorial.setPrefWidth(900);
+        tablaHistorial.setPrefHeight(600);
+
+        TableColumn<Object, String> colFecha = new TableColumn<>("Fecha");
+        colFecha.setPrefWidth(150);
+        colFecha.setCellValueFactory(cellData -> {
+            Object item = cellData.getValue();
+            if (item instanceof VisitaVeterinaria vv && vv.getFecha() != null) {
+                return new javafx.beans.property.SimpleStringProperty(vv.getFecha().toString());
+            } else if (item instanceof ServicioPeluqueria sp && sp.getFecha() != null) {
+                return new javafx.beans.property.SimpleStringProperty(sp.getFecha().toString());
+            }
+            return new javafx.beans.property.SimpleStringProperty("");
+        });
+
+        TableColumn<Object, String> colTipo = new TableColumn<>("Tipo");
+        colTipo.setPrefWidth(150);
+        colTipo.setCellValueFactory(cellData -> {
+            Object item = cellData.getValue();
+            if (item instanceof VisitaVeterinaria) {
+                return new javafx.beans.property.SimpleStringProperty("Veterinaria");
+            } else if (item instanceof ServicioPeluqueria) {
+                return new javafx.beans.property.SimpleStringProperty("Peluquería");
+            }
+            return new javafx.beans.property.SimpleStringProperty("");
+        });
+
+        TableColumn<Object, String> colMotivo = new TableColumn<>("Motivo / Servicio");
+        colMotivo.setPrefWidth(200);
+        colMotivo.setCellValueFactory(cellData -> {
+            Object item = cellData.getValue();
+            if (item instanceof VisitaVeterinaria vv) {
+                return new javafx.beans.property.SimpleStringProperty(vv.getMotivo());
+            } else if (item instanceof ServicioPeluqueria sp) {
+                return new javafx.beans.property.SimpleStringProperty(sp.getTipoServicio());
+            }
+            return new javafx.beans.property.SimpleStringProperty("");
+        });
+
+        TableColumn<Object, String> colObservaciones = new TableColumn<>("Observaciones / Precio");
+        colObservaciones.setPrefWidth(350);
+        colObservaciones.setCellValueFactory(cellData -> {
+            Object item = cellData.getValue();
+            if (item instanceof VisitaVeterinaria vv) {
+                return new javafx.beans.property.SimpleStringProperty(vv.getObservaciones());
+            } else if (item instanceof ServicioPeluqueria sp) {
+                return new javafx.beans.property.SimpleStringProperty("Precio: " + sp.getPrecio());
+            }
+            return new javafx.beans.property.SimpleStringProperty("");
+        });
+
+        tablaHistorial.getColumns().addAll(colFecha, colTipo, colMotivo, colObservaciones);
+
+        // Unir ambas listas
+        List<Object> historial = new ArrayList<>();
+        historial.addAll(visitasVet);
+        historial.addAll(citasPelu);
+        // Ordenar por fecha descendente si se desea
+        historial.sort((a, b) -> {
+            LocalDate fechaA = null, fechaB = null;
+            if (a instanceof VisitaVeterinaria vv) fechaA = vv.getFecha();
+            if (a instanceof ServicioPeluqueria sp) fechaA = sp.getFecha();
+            if (b instanceof VisitaVeterinaria vv) fechaB = vv.getFecha();
+            if (b instanceof ServicioPeluqueria sp) fechaB = sp.getFecha();
+            if (fechaA == null && fechaB == null) return 0;
+            if (fechaA == null) return 1;
+            if (fechaB == null) return -1;
+            return fechaB.compareTo(fechaA);
+        });
+
+        tablaHistorial.setItems(FXCollections.observableArrayList(historial));
+
+        Stage stage = new Stage();
+        stage.setTitle("Historial de " + mascotaSeleccionada.getNombre());
+        stage.setScene(new Scene(tablaHistorial));
+        stage.setWidth(900);
+        stage.setHeight(650);
+        stage.show();
     }
 }

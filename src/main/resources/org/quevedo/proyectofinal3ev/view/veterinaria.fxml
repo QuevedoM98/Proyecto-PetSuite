@@ -13,6 +13,28 @@
             </image>
         </ImageView>
 
+        <!-- Label y tabla de pacientes -->
+        <Label layoutX="744.0" layoutY="400.0" styleClass="text-back" text="Pacientes" />
+        <TableView fx:id="tablePacientes" layoutX="744.0" layoutY="425.0" prefHeight="150.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colNombrePaciente" prefWidth="180.0" text="Nombre" />
+                <TableColumn fx:id="colEspeciePaciente" prefWidth="180.0" text="Especie" />
+                <TableColumn fx:id="colRazaPaciente" prefWidth="180.0" text="Raza" />
+                <TableColumn fx:id="colDuenoPaciente" prefWidth="180.0" text="Dueño" />
+            </columns>
+        </TableView>
+
+        <!-- Label y tabla de historial de citas -->
+        <Label layoutX="744.0" layoutY="600.0" styleClass="text-back" text="Todas las citas" />
+        <TableView fx:id="tableHistorialCitas" layoutX="744.0" layoutY="625.0" prefHeight="150.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colFechaHistorial" prefWidth="150.0" text="Fecha" />
+                <TableColumn fx:id="colMascotaHistorial" prefWidth="200.0" text="Mascota" />
+                <TableColumn fx:id="colMotivoHistorial" prefWidth="200.0" text="Motivo" />
+                <TableColumn fx:id="colObservacionesHistorial" prefWidth="250.0" text="Observaciones" />
+            </columns>
+        </TableView>
+
         <!-- Título y tabla de citas del día -->
         <Label layoutX="744.0" layoutY="200.0" styleClass="text-back" text="Citas del Día" />
         <TableView fx:id="tableCitas" layoutX="744.0" layoutY="225.0" prefHeight="150.0" prefWidth="800.0">
@@ -24,38 +46,13 @@
             </columns>
         </TableView>
 
-        <!-- Título y tabla de pacientes -->
-        <Label layoutX="744.0" layoutY="400.0" styleClass="text-back" text="Pacientes" />
-        <TableView fx:id="tablePacientes" layoutX="744.0" layoutY="425.0" prefHeight="150.0" prefWidth="800.0">
-            <columns>
-                <TableColumn fx:id="colIdPaciente" prefWidth="100.0" text="ID" />
-                <TableColumn fx:id="colNombrePaciente" prefWidth="200.0" text="Nombre" />
-                <TableColumn fx:id="colEspeciePaciente" prefWidth="200.0" text="Especie" />
-                <TableColumn fx:id="colRazaPaciente" prefWidth="200.0" text="Raza" />
-                <TableColumn fx:id="colDuenoPaciente" prefWidth="200.0" text="Dueño" />
-            </columns>
-        </TableView>
-
-        <!-- Título y tabla de historial de citas -->
-        <Label layoutX="744.0" layoutY="600.0" styleClass="text-back" text="Historial de Citas" />
-        <TableView fx:id="tableHistorialCitas" layoutX="744.0" layoutY="625.0" prefHeight="150.0" prefWidth="800.0">
-            <columns>
-                <TableColumn fx:id="colFechaHistorial" prefWidth="150.0" text="Fecha" />
-                <TableColumn fx:id="colMascotaHistorial" prefWidth="200.0" text="Mascota" />
-                <TableColumn fx:id="colMotivoHistorial" prefWidth="300.0" text="Motivo" />
-                <TableColumn fx:id="colObservacionesHistorial" prefWidth="250.0" text="Observaciones" />
-            </columns>
-        </TableView>
-
         <!-- Botones para acciones -->
-        <Button fx:id="btnAgregarCita" layoutX="365.0" layoutY="276.0" onAction="#agregarCita" prefWidth="280.0" styleClass="button-modern" text="Agregar Cita" />
-        <Button fx:id="btnModificarCita" layoutX="365.0" layoutY="346.0" onAction="#modificarCita" prefWidth="280.0" styleClass="button-modern" text="Modificar Cita" />
-        <Button fx:id="btnEliminarCita" layoutX="365.0" layoutY="416.0" onAction="#eliminarCita" prefWidth="280.0" styleClass="button-modern" text="Eliminar Cita" />
-        <Button fx:id="btnVerHistorial" layoutX="365.0" layoutY="486.0" onAction="#verHistorial" prefWidth="280.0" styleClass="button-modern" text="Ver Historial" />
-        <Button fx:id="btnGestionarPacientes" layoutX="365.0" layoutY="556.0" onAction="#gestionarPacientes" prefWidth="280.0" styleClass="button-modern" text="Gestionar Pacientes" />
-        <Button fx:id="btnSalir" layoutX="1366.0" layoutY="225.0" onAction="#salirAplicacion" prefWidth="150.0" styleClass="button-modern" text="Salir" />
-
-        <!-- Label para vacunas pendientes -->
-        <Label fx:id="lblVacunasPendientes" layoutX="744.0" layoutY="150.0" text="Vacunas pendientes: 0" />
+        <Button fx:id="btnAgregarCita" layoutX="365.0" layoutY="256.0" onAction="#agregarCita" prefWidth="280.0" styleClass="button-modern" text="Agregar Cita" />
+        <Button fx:id="btnModificarCita" layoutX="365.0" layoutY="326.0" onAction="#modificarCita" prefWidth="280.0" styleClass="button-modern" text="Modificar Cita" />
+        <Button fx:id="btnEliminarCita" layoutX="365.0" layoutY="396.0" onAction="#eliminarCita" prefWidth="280.0" styleClass="button-modern" text="Eliminar Cita" />
+        <Button fx:id="btnVerHistorial" layoutX="365.0" layoutY="506.0" onAction="#verHistorial" prefWidth="280.0" styleClass="button-modern" text="Ver Historial" />
+        <Button fx:id="btnGestionarPacientes" layoutX="365.0" layoutY="576.0" onAction="#gestionarPacientes" prefWidth="280.0" styleClass="button-modern" text="Gestionar Pacientes" />
+        <Button fx:id="btnAgregarDueno" layoutX="365.0" layoutY="646.0" onAction="#agregarDueno" prefWidth="280.0" styleClass="button-modern" text="Agregar Dueño" />
+        <Button fx:id="btnSalir" layoutX="1366.0" layoutY="145.0" onAction="#salirAplicacion" prefWidth="150.0" styleClass="button-modern" text="Salir" />
     </children>
 </AnchorPane>
