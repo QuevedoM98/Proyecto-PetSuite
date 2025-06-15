@@ -9,7 +9,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase DAO encargada de gestionar las operaciones de base de datos relacionadas con la entidad {@link Mascota}.
+ */
 public class MascotaDAO {
+    // Consultas SQL utilizadas por esta clase
     private static final String SQL_INSERT = "INSERT INTO Mascota (nombre, especie, raza, fechaNacimiento, duenio_id) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_FIND_BY_ID = "SELECT m.*, u.id AS duenio_id, u.nombre_usuario AS duenio_nombre " +
             "FROM Mascota m " +
@@ -25,12 +29,25 @@ public class MascotaDAO {
             "JOIN Usuario u ON m.duenio_id = u.id";
     private static final String SQL_DELETE = "DELETE FROM Mascota WHERE id = ?";
 
+    /**
+     * Valida que la conexión a la base de datos esté activa.
+     *
+     * @param connection conexión a validar.
+     * @throws SQLException si la conexión es nula o está cerrada.
+     */
     private static void validateConnection(Connection connection) throws SQLException {
         if (connection == null || connection.isClosed()) {
             throw new SQLException("La conexión a la base de datos no está disponible o ya está cerrada.");
         }
     }
 
+    /**
+     * Inserta una nueva mascota en la base de datos.
+     *
+     * @param mascota Objeto {@link Mascota} a insertar.
+     * @return La mascota insertada con su ID actualizado, o {@code null} si no se pudo insertar.
+     * @throws RuntimeException si ocurre un error durante la inserción.
+     */
     public static Mascota insert(Mascota mascota) {
         if (mascota != null) {
             try (Connection connection = ConnectionDB.getConnection();
@@ -64,6 +81,13 @@ public class MascotaDAO {
         return mascota;
     }
 
+    /**
+     * Busca una mascota en la base de datos por su ID.
+     *
+     * @param id Identificador único de la mascota.
+     * @return La mascota encontrada, o {@code null} si no existe.
+     * @throws RuntimeException si ocurre un error durante la búsqueda.
+     */
     public static Mascota findById(int id) {
         Mascota mascota = null;
 
@@ -97,6 +121,13 @@ public class MascotaDAO {
         return mascota;
     }
 
+    /**
+     * Obtiene todas las mascotas registradas por un usuario específico.
+     *
+     * @param usuarioId ID del usuario propietario de las mascotas.
+     * @return Lista de mascotas asociadas al usuario.
+     * @throws RuntimeException si ocurre un error al obtener los datos.
+     */
     public static List<Mascota> getMascotasByUsuarioId(int usuarioId) {
         List<Mascota> mascotas = new ArrayList<>();
 
@@ -131,6 +162,13 @@ public class MascotaDAO {
         return mascotas;
     }
 
+    /**
+     * Elimina una mascota de la base de datos por su ID.
+     *
+     * @param id Identificador único de la mascota a eliminar.
+     * @return {@code true} si la eliminación fue exitosa; {@code false} en caso contrario.
+     * @throws RuntimeException si ocurre un error durante la eliminación.
+     */
     public static boolean delete(int id) {
         boolean deleted = false;
 
@@ -148,6 +186,13 @@ public class MascotaDAO {
         return deleted;
     }
 
+    /**
+     * Actualiza los datos de una mascota existente en la base de datos.
+     *
+     * @param mascota Objeto {@link Mascota} con los datos actualizados.
+     * @return {@code true} si la actualización fue exitosa; {@code false} en caso contrario.
+     * @throws RuntimeException si ocurre un error durante la actualización.
+     */
     public static boolean update(Mascota mascota) {
         boolean updated = false;
 
@@ -173,6 +218,12 @@ public class MascotaDAO {
         return updated;
     }
 
+    /**
+     * Recupera todas las mascotas registradas en la base de datos.
+     *
+     * @return Lista de todas las mascotas.
+     * @throws RuntimeException si ocurre un error durante la recuperación.
+     */
     public static List<Mascota> getAllMascotas() {
         List<Mascota> mascotas = new ArrayList<>();
 

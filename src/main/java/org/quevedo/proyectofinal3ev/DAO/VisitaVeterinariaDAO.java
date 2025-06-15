@@ -9,6 +9,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase DAO (Data Access Object) para la entidad {@link VisitaVeterinaria}.
+ * Proporciona métodos para interactuar con la base de datos y realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar)
+ * y otras consultas relacionadas con las visitas veterinarias.
+ */
 public class VisitaVeterinariaDAO {
     private static final String SQL_GET_ALL = "SELECT v.id, v.fecha, v.fecha_hora, v.motivo, v.observaciones, " +
             "m.id AS mascota_id, m.nombre AS mascota_nombre, " +
@@ -47,27 +52,33 @@ public class VisitaVeterinariaDAO {
     // Consulta para citas del día de una veterinaria concreta
     private static final String SQL_GET_TODAYS_VISITS_BY_VET =
             "SELECT v.id, v.fecha, v.fecha_hora, v.motivo, v.observaciones, " +
-            "m.id AS mascota_id, m.nombre AS mascota_nombre, " +
-            "duenio.id AS duenio_id, duenio.nombre_usuario AS duenio_nombre, " +
-            "u.id AS veterinaria_id, u.nombre_usuario AS veterinaria_nombre " +
-            "FROM VisitaVeterinaria v " +
-            "JOIN Mascota m ON v.mascota_id = m.id " +
-            "JOIN Usuario duenio ON m.duenio_id = duenio.id " +
-            "JOIN Usuario u ON v.veterinaria_id = u.id " +
-            "WHERE DATE(v.fecha_hora) = CURRENT_DATE AND v.veterinaria_id = ?";
+                    "m.id AS mascota_id, m.nombre AS mascota_nombre, " +
+                    "duenio.id AS duenio_id, duenio.nombre_usuario AS duenio_nombre, " +
+                    "u.id AS veterinaria_id, u.nombre_usuario AS veterinaria_nombre " +
+                    "FROM VisitaVeterinaria v " +
+                    "JOIN Mascota m ON v.mascota_id = m.id " +
+                    "JOIN Usuario duenio ON m.duenio_id = duenio.id " +
+                    "JOIN Usuario u ON v.veterinaria_id = u.id " +
+                    "WHERE DATE(v.fecha_hora) = CURRENT_DATE AND v.veterinaria_id = ?";
 
     // Consulta para historial de citas de una veterinaria concreta
     private static final String SQL_GET_ALL_VISITS_BY_VET =
             "SELECT v.id, v.fecha, v.fecha_hora, v.motivo, v.observaciones, " +
-            "m.id AS mascota_id, m.nombre AS mascota_nombre, " +
-            "duenio.id AS duenio_id, duenio.nombre_usuario AS duenio_nombre, " +
-            "u.id AS veterinaria_id, u.nombre_usuario AS veterinaria_nombre " +
-            "FROM VisitaVeterinaria v " +
-            "JOIN Mascota m ON v.mascota_id = m.id " +
-            "JOIN Usuario duenio ON m.duenio_id = duenio.id " +
-            "JOIN Usuario u ON v.veterinaria_id = u.id " +
-            "WHERE v.veterinaria_id = ?";
+                    "m.id AS mascota_id, m.nombre AS mascota_nombre, " +
+                    "duenio.id AS duenio_id, duenio.nombre_usuario AS duenio_nombre, " +
+                    "u.id AS veterinaria_id, u.nombre_usuario AS veterinaria_nombre " +
+                    "FROM VisitaVeterinaria v " +
+                    "JOIN Mascota m ON v.mascota_id = m.id " +
+                    "JOIN Usuario duenio ON m.duenio_id = duenio.id " +
+                    "JOIN Usuario u ON v.veterinaria_id = u.id " +
+                    "WHERE v.veterinaria_id = ?";
 
+    /**
+     * Obtiene una lista de todas las visitas veterinarias registradas en la base de datos.
+     *
+     * @return Una lista de objetos {@link VisitaVeterinaria} con todas las visitas.
+     * @throws RuntimeException Si ocurre un error al acceder a la base de datos.
+     */
     public static List<VisitaVeterinaria> getAllVisitas() {
         List<VisitaVeterinaria> visitas = new ArrayList<>();
         try (Connection connection = ConnectionDB.getConnection();
@@ -103,6 +114,13 @@ public class VisitaVeterinariaDAO {
         return visitas;
     }
 
+    /**
+     * Busca una visita veterinaria por su ID en la base de datos.
+     *
+     * @param id El ID de la visita a buscar.
+     * @return El objeto {@link VisitaVeterinaria} si se encuentra, o {@code null} si no existe ninguna visita con el ID dado.
+     * @throws RuntimeException Si ocurre un error al acceder a la base de datos.
+     */
     public static VisitaVeterinaria findById(int id) {
         VisitaVeterinaria visita = null;
         try (Connection connection = ConnectionDB.getConnection();
@@ -139,6 +157,14 @@ public class VisitaVeterinariaDAO {
         return visita;
     }
 
+    /**
+     * Inserta una nueva visita veterinaria en la base de datos.
+     * Si la inserción es exitosa, el ID generado para la visita se establece en el objeto {@code visita} proporcionado.
+     *
+     * @param visita El objeto {@link VisitaVeterinaria} a insertar.
+     * @return El objeto {@link VisitaVeterinaria} con el ID asignado si la inserción fue exitosa, o {@code null} si el objeto de entrada era nulo.
+     * @throws RuntimeException Si ocurre un error al insertar la visita en la base de datos.
+     */
     public static VisitaVeterinaria insert(VisitaVeterinaria visita) {
         if (visita != null) {
             try (Connection connection = ConnectionDB.getConnection();
@@ -169,6 +195,13 @@ public class VisitaVeterinariaDAO {
         return visita;
     }
 
+    /**
+     * Elimina una visita veterinaria de la base de datos por su ID.
+     *
+     * @param id El ID de la visita a eliminar.
+     * @return {@code true} si la visita fue eliminada con éxito, {@code false} en caso contrario.
+     * @throws RuntimeException Si ocurre un error al eliminar la visita de la base de datos.
+     */
     public static boolean delete(int id) {
         boolean deleted = false;
         try (Connection connection = ConnectionDB.getConnection();
@@ -182,6 +215,13 @@ public class VisitaVeterinariaDAO {
         return deleted;
     }
 
+    /**
+     * Actualiza una visita veterinaria existente en la base de datos.
+     *
+     * @param visita El objeto {@link VisitaVeterinaria} con los datos actualizados. El ID de la visita se utiliza para identificar el registro a actualizar.
+     * @return {@code true} si la visita fue actualizada con éxito, {@code false} en caso contrario.
+     * @throws RuntimeException Si ocurre un error al actualizar la visita en la base de datos.
+     */
     public static boolean update(VisitaVeterinaria visita) {
         boolean updated = false;
         if (visita != null) {
@@ -208,6 +248,13 @@ public class VisitaVeterinariaDAO {
         return updated;
     }
 
+    /**
+     * Obtiene una lista de visitas veterinarias asociadas a una mascota específica.
+     *
+     * @param mascotaId El ID de la mascota de la que se desean obtener las visitas.
+     * @return Una lista de objetos {@link VisitaVeterinaria} que pertenecen a la mascota con el ID dado.
+     * @throws RuntimeException Si ocurre un error al acceder a la base de datos.
+     */
     public static List<VisitaVeterinaria> getVisitasByMascotaId(int mascotaId) {
         List<VisitaVeterinaria> visitas = new ArrayList<>();
         try (Connection connection = ConnectionDB.getConnection();
@@ -246,6 +293,12 @@ public class VisitaVeterinariaDAO {
         return visitas;
     }
 
+    /**
+     * Obtiene una lista de todas las visitas veterinarias programadas para el día actual.
+     *
+     * @return Una lista de objetos {@link VisitaVeterinaria} que representan las visitas del día.
+     * @throws RuntimeException Si ocurre un error al acceder a la base de datos.
+     */
     public static List<VisitaVeterinaria> getVisitasDelDia() {
         List<VisitaVeterinaria> visitas = new ArrayList<>();
         try (Connection connection = ConnectionDB.getConnection();
@@ -285,6 +338,13 @@ public class VisitaVeterinariaDAO {
         return visitas;
     }
 
+    /**
+     * Obtiene una lista de citas de visitas veterinarias programadas para el día actual y para una veterinaria específica.
+     *
+     * @param veterinariaId El ID de la veterinaria de la que se desean obtener las citas del día.
+     * @return Una lista de objetos {@link VisitaVeterinaria} que representan las citas del día para la veterinaria.
+     * @throws RuntimeException Si ocurre un error al acceder a la base de datos.
+     */
     public static List<VisitaVeterinaria> getVisitasDelDiaPorVeterinaria(int veterinariaId) {
         List<VisitaVeterinaria> visitas = new ArrayList<>();
         try (Connection connection = ConnectionDB.getConnection();
@@ -329,6 +389,13 @@ public class VisitaVeterinariaDAO {
         return visitas;
     }
 
+    /**
+     * Obtiene el historial completo de visitas veterinarias asociadas a una veterinaria específica.
+     *
+     * @param veterinariaId El ID de la veterinaria de la que se desea obtener el historial de visitas.
+     * @return Una lista de objetos {@link VisitaVeterinaria} que forman parte del historial de visitas de la veterinaria.
+     * @throws RuntimeException Si ocurre un error al acceder a la base de datos.
+     */
     public static List<VisitaVeterinaria> getAllVisitasPorVeterinaria(int veterinariaId) {
         List<VisitaVeterinaria> visitas = new ArrayList<>();
         try (Connection connection = ConnectionDB.getConnection();

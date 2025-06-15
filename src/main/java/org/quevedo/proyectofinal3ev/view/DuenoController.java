@@ -28,6 +28,11 @@ import java.util.ResourceBundle;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
+/**
+ * Controlador para la vista del dueño de mascota en la aplicación.
+ * Gestiona la interacción del usuario con la interfaz, mostrando información de sus mascotas,
+ * historial y próximas citas veterinarias y de peluquería, y permitiendo la gestión de estos datos.
+ */
 public class DuenoController extends Controller implements Initializable {
 
     @FXML
@@ -73,6 +78,13 @@ public class DuenoController extends Controller implements Initializable {
     private ObservableList<ServicioPeluqueria> futurasCitasPeluqueria;
     private Usuario usuarioActual;
 
+    /**
+     * Inicializa el controlador después de que su elemento raíz ha sido completamente procesado.
+     * Configura las listas observables y las factorías de celdas para las tablas.
+     *
+     * @param url La ubicación utilizada para resolver rutas relativas para el objeto raíz, o null si la ubicación no se conoce.
+     * @param resourceBundle Los recursos utilizados para localizar el objeto raíz, o null si el objeto raíz no fue localizado.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicializar listas observables
@@ -110,7 +122,14 @@ public class DuenoController extends Controller implements Initializable {
         tableFuturasCitasPeluqueria.setItems(futurasCitasPeluqueria);
     }
 
-
+    /**
+     * Método invocado cuando la vista se abre.
+     * Si el input es una instancia de {@link Usuario}, se establece como el usuario actual
+     * y se cargan sus datos.
+     *
+     * @param input El objeto de entrada, que se espera sea una instancia de {@link Usuario}.
+     * @throws IOException Si ocurre un error de E/S.
+     */
     @Override
     public void onOpen(Object input) throws IOException {
         if (input instanceof Usuario) {
@@ -121,16 +140,32 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Método invocado cuando la vista se cierra.
+     * No realiza ninguna acción específica en este controlador.
+     *
+     * @param output El objeto de salida (no utilizado).
+     */
     @Override
     public void onClose(Object output) {
-
+        // No hay acciones específicas al cerrar en este controlador
     }
 
+    /**
+     * Establece el usuario actual y carga los datos asociados a él en las tablas.
+     *
+     * @param usuario El objeto {@link Usuario} que representa al usuario actualmente logueado.
+     */
     public void setUsuarioActual(Usuario usuario) {
         this.usuarioActual = usuario;
         cargarDatos();
     }
 
+    /**
+     * Carga los datos de las mascotas, historial de visitas veterinarias, próximas visitas veterinarias
+     * y futuras citas de peluquería del usuario actual en las tablas correspondientes.
+     * Muestra una alerta si el usuario actual no es válido o si ocurre un error durante la carga.
+     */
     private void cargarDatos() {
         if (usuarioActual == null) {
             mostrarAlerta("Error: Usuario no válido. No se pueden cargar los datos.");
@@ -178,6 +213,10 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para agregar una nueva mascota a la base de datos y a la tabla.
+     * Requiere que un usuario actual válido esté establecido.
+     */
     @FXML
     private void agregarMascota() {
         if (usuarioActual == null || usuarioActual.getId() <= 0) {
@@ -203,6 +242,10 @@ public class DuenoController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Elimina la mascota seleccionada de la tabla y de la base de datos.
+     * Muestra una alerta si no hay ninguna mascota seleccionada.
+     */
     @FXML
     private void eliminarMascota() {
         Mascota mascotaSeleccionada = tableMascotas.getSelectionModel().getSelectedItem();
@@ -219,6 +262,10 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para modificar la mascota seleccionada en la tabla y actualiza la base de datos.
+     * Muestra una alerta si no hay ninguna mascota seleccionada.
+     */
     @FXML
     private void modificarMascota() {
         Mascota mascotaSeleccionada = tableMascotas.getSelectionModel().getSelectedItem();
@@ -238,6 +285,11 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para modificar la cita veterinaria seleccionada en la tabla de próximas visitas
+     * y actualiza la base de datos.
+     * Muestra una alerta si no hay ninguna cita seleccionada.
+     */
     @FXML
     private void modificarCitaVeterinaria() {
         VisitaVeterinaria citaSeleccionada = tableProximasVisitas.getSelectionModel().getSelectedItem();
@@ -257,6 +309,10 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Elimina la cita de peluquería seleccionada de la tabla y de la base de datos.
+     * Muestra una alerta si no hay ninguna cita seleccionada.
+     */
     @FXML
     private void eliminarCitaPeluqueria() {
         ServicioPeluqueria citaSeleccionada = tableFuturasCitasPeluqueria.getSelectionModel().getSelectedItem();
@@ -273,12 +329,19 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Cierra la aplicación.
+     */
     @FXML
     private void salirAplicacion() {
-        // Cierra la aplicación
         System.exit(0);
     }
 
+    /**
+     * Abre un diálogo para modificar la cita de peluquería seleccionada en la tabla de futuras citas
+     * y actualiza la base de datos.
+     * Muestra una alerta si no hay ninguna cita seleccionada.
+     */
     @FXML
     private void modificarCitaPeluqueria() {
         ServicioPeluqueria citaSeleccionada = tableFuturasCitasPeluqueria.getSelectionModel().getSelectedItem();
@@ -298,6 +361,10 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para agregar una nueva cita de peluquería para la mascota seleccionada.
+     * Muestra una alerta si no hay ninguna mascota seleccionada.
+     */
     @FXML
     private void agregarCitaPeluqueria() {
         Mascota mascotaSeleccionada = tableMascotas.getSelectionModel().getSelectedItem();
@@ -324,12 +391,24 @@ public class DuenoController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Muestra una alerta de tipo ERROR con el mensaje proporcionado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta.
+     */
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    /**
+     * Muestra un diálogo para agregar o modificar una {@link Mascota}.
+     *
+     * @param mascota El objeto {@link Mascota} a modificar, o {@code null} si se va a agregar una nueva mascota.
+     * @return Un {@link Optional} que contiene la {@link Mascota} resultante si se guarda, o vacío si se cancela.
+     */
     private Optional<Mascota> showMascotaDialog(Mascota mascota) {
         Dialog<Mascota> dialog = new Dialog<>();
         dialog.setTitle(mascota == null ? "Agregar Mascota" : "Modificar Mascota");
@@ -375,6 +454,13 @@ public class DuenoController extends Controller implements Initializable {
         return dialog.showAndWait();
     }
 
+    /**
+     * Muestra un diálogo para agregar o modificar una {@link VisitaVeterinaria}.
+     * Permite seleccionar un veterinario de una lista de usuarios de tipo VETERINARIA.
+     *
+     * @param visita El objeto {@link VisitaVeterinaria} a modificar, o {@code null} si se va a agregar una nueva visita.
+     * @return Un {@link Optional} que contiene la {@link VisitaVeterinaria} resultante si se guarda, o vacío si se cancela.
+     */
     private Optional<VisitaVeterinaria> showVisitaVeterinariaDialog(VisitaVeterinaria visita) {
         Dialog<VisitaVeterinaria> dialog = new Dialog<>();
         dialog.setTitle(visita == null ? "Agregar Visita Veterinaria" : "Modificar Visita Veterinaria");
@@ -434,6 +520,13 @@ public class DuenoController extends Controller implements Initializable {
         return dialog.showAndWait();
     }
 
+    /**
+     * Muestra un diálogo para agregar o modificar un {@link ServicioPeluqueria}.
+     * Permite seleccionar un peluquero de una lista de usuarios de tipo PELUQUERIA.
+     *
+     * @param cita El objeto {@link ServicioPeluqueria} a modificar, o {@code null} si se va a agregar un nuevo servicio.
+     * @return Un {@link Optional} que contiene el {@link ServicioPeluqueria} resultante si se guarda, o vacío si se cancela.
+     */
     private Optional<ServicioPeluqueria> showCitaPeluqueriaDialog(ServicioPeluqueria cita) {
         Dialog<ServicioPeluqueria> dialog = new Dialog<>();
         dialog.setTitle(cita == null ? "Agregar Cita de Peluquería" : "Modificar Cita de Peluquería");
@@ -483,7 +576,12 @@ public class DuenoController extends Controller implements Initializable {
                 ServicioPeluqueria nuevaCita = cita != null ? cita : new ServicioPeluqueria();
                 nuevaCita.setFecha(fechaPicker.getValue());
                 nuevaCita.setTipoServicio(tipoServicioField.getText());
-                nuevaCita.setPrecio(Double.parseDouble(precioField.getText()));
+                try {
+                    nuevaCita.setPrecio(Double.parseDouble(precioField.getText()));
+                } catch (NumberFormatException e) {
+                    mostrarAlerta("El precio debe ser un número válido.");
+                    return null; // No retornar la cita si hay un error de formato
+                }
                 nuevaCita.setPeluqueria(peluqueroComboBox.getValue());
                 return nuevaCita;
             }
@@ -493,6 +591,10 @@ public class DuenoController extends Controller implements Initializable {
         return dialog.showAndWait();
     }
 
+    /**
+     * Abre un diálogo para agregar una nueva cita veterinaria para la mascota seleccionada.
+     * Muestra una alerta si no hay ninguna mascota seleccionada.
+     */
     @FXML
     private void agregarCitaVeterinaria() {
         Mascota mascotaSeleccionada = tableMascotas.getSelectionModel().getSelectedItem();
@@ -519,6 +621,10 @@ public class DuenoController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Elimina la cita veterinaria seleccionada de la tabla y de la base de datos.
+     * Muestra una alerta si no hay ninguna cita seleccionada.
+     */
     @FXML
     private void eliminarCitaVeterinaria() {
         VisitaVeterinaria citaSeleccionada = tableProximasVisitas.getSelectionModel().getSelectedItem();
@@ -535,6 +641,10 @@ public class DuenoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Muestra un diálogo de selección para que el usuario elija una acción de gestión de mascotas:
+     * agregar, modificar o eliminar. Llama al método correspondiente según la opción seleccionada.
+     */
     @FXML
     private void gestionarMascotas() {
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Mascota",
@@ -558,6 +668,10 @@ public class DuenoController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Muestra un diálogo de selección para que el usuario elija una acción de gestión de citas veterinarias:
+     * agregar, modificar o eliminar. Llama al método correspondiente según la opción seleccionada.
+     */
     @FXML
     private void gestionarCitasVeterinaria() {
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Cita Veterinaria",
@@ -581,6 +695,10 @@ public class DuenoController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Muestra un diálogo de selección para que el usuario elija una acción de gestión de citas de peluquería:
+     * agregar, modificar o eliminar. Llama al método correspondiente según la opción seleccionada.
+     */
     @FXML
     private void gestionarCitasPeluqueria() {
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Cita Peluquería",
@@ -604,6 +722,11 @@ public class DuenoController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Muestra una nueva ventana con el historial completo de visitas veterinarias y servicios de peluquería
+     * para la mascota seleccionada. El historial se presenta en una tabla combinada y ordenada por fecha.
+     * Muestra una alerta si no hay ninguna mascota seleccionada.
+     */
     @FXML
     private void mostrarHistorialMascota() {
         Mascota mascotaSeleccionada = tableMascotas.getSelectionModel().getSelectedItem();

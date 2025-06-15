@@ -27,38 +27,62 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la vista del peluquero en la aplicación.
+ * Gestiona la interfaz de usuario para que el personal de peluquería pueda ver y gestionar
+ * las citas del día, el historial de servicios, y la información de los clientes (mascotas y dueños).
+ */
 public class PeluqueriaController extends Controller implements Initializable {
     @FXML
-    private TableView<Mascota> tablePacientes;
+    private TableView<Mascota> tablePacientes; // Esta tabla parece ser un duplicado o no se usa como "pacientes" en el contexto de peluquería, sino más bien como "clientes" (mascotas). Se usa "tableClientes" para la gestión.
     @FXML
-    private TableView<VisitaVeterinaria> tableCitas;
+    private TableView<VisitaVeterinaria> tableCitas; // Esta tabla no se usa en este controlador, parece ser de veterinaria.
     @FXML
-    private TableView<VisitaVeterinaria> tableHistorialCitas;
-    @FXML private TableView<ServicioPeluqueria> tableCitasDia;
-    @FXML private TableView<ServicioPeluqueria> tableHistorialServicios;
-    @FXML private TableView<Mascota> tableClientes;
+    private TableView<VisitaVeterinaria> tableHistorialCitas; // Esta tabla no se usa en este controlador, parece ser de veterinaria.
+    @FXML
+    private TableView<ServicioPeluqueria> tableCitasDia;
+    @FXML
+    private TableView<ServicioPeluqueria> tableHistorialServicios;
+    @FXML
+    private TableView<Mascota> tableClientes;
 
-    @FXML private TableColumn<ServicioPeluqueria, String> colHoraCita;
-    @FXML private TableColumn<ServicioPeluqueria, String> colMascotaCita;
-    @FXML private TableColumn<ServicioPeluqueria, String> colDuenoCita;
-    @FXML private TableColumn<ServicioPeluqueria, String> colServicioCita;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colHoraCita;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colMascotaCita;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colDuenoCita;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colServicioCita;
 
-    @FXML private TableColumn<ServicioPeluqueria, String> colFechaServicio;
-    @FXML private TableColumn<ServicioPeluqueria, String> colMascotaServicio;
-    @FXML private TableColumn<ServicioPeluqueria, String> colTipoServicio;
-    @FXML private TableColumn<ServicioPeluqueria, String> colPrecioServicio;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colFechaServicio;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colMascotaServicio;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colTipoServicio;
+    @FXML
+    private TableColumn<ServicioPeluqueria, String> colPrecioServicio;
 
-    @FXML private TableColumn<Mascota, String> colNombreCliente;
-    @FXML private TableColumn<Mascota, String> colEspecieCliente;
-    @FXML private TableColumn<Mascota, String> colRazaCliente;
-    @FXML private TableColumn<Mascota, String> colDuenoCliente;
+    @FXML
+    private TableColumn<Mascota, String> colNombreCliente;
+    @FXML
+    private TableColumn<Mascota, String> colEspecieCliente;
+    @FXML
+    private TableColumn<Mascota, String> colRazaCliente;
+    @FXML
+    private TableColumn<Mascota, String> colDuenoCliente;
 
-    private Usuario usuarioActual;
-    private Usuario peluqueroActual;
-    private List<Mascota> pacientes;
-    private List<VisitaVeterinaria> citas;
-    private List<VisitaVeterinaria> historialCitas;
+    private Usuario usuarioActual; // Podría ser usado como un usuario genérico.
+    private Usuario peluqueroActual; // El usuario actualmente logueado como peluquero.
+    private List<Mascota> pacientes; // Lista de mascotas, se superpone con tableClientes
+    private List<VisitaVeterinaria> citas; // No usada en este contexto de peluquería.
+    private List<VisitaVeterinaria> historialCitas; // No usada en este contexto de peluquería.
 
+    /**
+     * Carga todas las mascotas (consideradas "pacientes" en un contexto más amplio o "clientes" para peluquería)
+     * de la base de datos en la tabla {@code tablePacientes}.
+     */
     private void cargarPacientes() {
         if (tablePacientes != null) {
             List<Mascota> listaPacientes = MascotaDAO.getAllMascotas();
@@ -67,24 +91,40 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Carga el historial de visitas veterinarias en la tabla {@code tableHistorialCitas}.
+     * Este método parece estar fuera de lugar en un controlador de peluquería,
+     * ya que opera con {@link VisitaVeterinaria} y depende de un "veterinario actual".
+     *
+     * @deprecated Este método no es coherente con el rol de un controlador de peluquería.
+     */
+    @Deprecated
     private void cargarHistorialCitas() {
         if (tableHistorialCitas != null) {
             try {
-                Usuario veterinarioActual = obtenerVeterinarioActual();
+                Usuario veterinarioActual = obtenerVeterinarioActual(); // Este método debería obtener el peluquero actual.
                 if (veterinarioActual == null) {
-                    mostrarAlerta("No se ha definido el veterinario actual.");
+                    mostrarAlerta("No se ha definido el usuario actual (peluquero).");
                     return;
                 }
-                List<VisitaVeterinaria> listaHistorial =
-                        VisitaVeterinariaDAO.getAllVisitasPorVeterinaria(veterinarioActual.getId());
-                historialCitas = FXCollections.observableArrayList(listaHistorial);
-                tableHistorialCitas.setItems((ObservableList<VisitaVeterinaria>) historialCitas);
+                // La siguiente línea debería usar ServicioPeluqueriaDAO, no VisitaVeterinariaDAO
+                // List<VisitaVeterinaria> listaHistorial = VisitaVeterinariaDAO.getAllVisitasPorVeterinaria(veterinarioActual.getId());
+                // historialCitas = FXCollections.observableArrayList(listaHistorial);
+                // tableHistorialCitas.setItems((ObservableList<VisitaVeterinaria>) historialCitas);
             } catch (Exception e) {
                 mostrarAlerta("Error al cargar todas las citas: " + e.getMessage());
             }
         }
     }
 
+    /**
+     * Obtiene la cita veterinaria seleccionada de las tablas de citas o historial de citas.
+     * Este método parece estar fuera de lugar en un controlador de peluquería.
+     *
+     * @return La {@link VisitaVeterinaria} seleccionada, o {@code null} si no hay ninguna.
+     * @deprecated Este método no es coherente con el rol de un controlador de peluquería.
+     */
+    @Deprecated
     private VisitaVeterinaria getCitaSeleccionada() {
         VisitaVeterinaria citaSeleccionada = null;
 
@@ -97,11 +137,22 @@ public class PeluqueriaController extends Controller implements Initializable {
         return citaSeleccionada;
     }
 
+    /**
+     * Abre un diálogo para agregar una nueva cita de peluquería.
+     * Al confirmar, inserta la nueva cita en la base de datos y refresca las tablas de citas del día
+     * y historial de servicios.
+     */
     @FXML
     private void agregarCita() {
         Optional<ServicioPeluqueria> result = showCitaDialog(null);
         result.ifPresent(nuevaCita -> {
             try {
+                // Asignar el peluquero actual a la nueva cita
+                if (peluqueroActual == null) {
+                    mostrarAlerta("Error: Peluquero actual no definido. No se puede agregar la cita.");
+                    return;
+                }
+                nuevaCita.setPeluqueria(peluqueroActual);
                 ServicioPeluqueriaDAO.insert(nuevaCita);
                 cargarCitasDelDia();
                 cargarHistorialServicios();
@@ -111,6 +162,11 @@ public class PeluqueriaController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Obtiene la cita de peluquería seleccionada de las tablas de citas del día o historial de servicios.
+     *
+     * @return El {@link ServicioPeluqueria} seleccionado, o {@code null} si no hay ninguno.
+     */
     private ServicioPeluqueria getCitaPeluqueriaSeleccionada() {
         ServicioPeluqueria citaSeleccionada = null;
         if (tableCitasDia != null && tableCitasDia.getSelectionModel().getSelectedItem() != null) {
@@ -121,6 +177,11 @@ public class PeluqueriaController extends Controller implements Initializable {
         return citaSeleccionada;
     }
 
+    /**
+     * Abre un diálogo para modificar la cita de peluquería seleccionada.
+     * Al confirmar, actualiza la cita en la base de datos y refresca las tablas de citas del día
+     * y historial de servicios. Muestra una alerta si no hay ninguna cita seleccionada.
+     */
     @FXML
     private void modificarCita() {
         ServicioPeluqueria citaSeleccionada = getCitaPeluqueriaSeleccionada();
@@ -128,6 +189,10 @@ public class PeluqueriaController extends Controller implements Initializable {
             Optional<ServicioPeluqueria> result = showCitaDialog(citaSeleccionada);
             result.ifPresent(citaModificada -> {
                 try {
+                    // Mantener el peluquero original si no se cambia
+                    if (citaModificada.getPeluqueria() == null && peluqueroActual != null) {
+                        citaModificada.setPeluqueria(peluqueroActual);
+                    }
                     ServicioPeluqueriaDAO.update(citaModificada);
                     cargarCitasDelDia();
                     cargarHistorialServicios();
@@ -140,6 +205,10 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Elimina la cita de peluquería seleccionada de la base de datos y refresca las tablas de citas del día
+     * y historial de servicios. Muestra una alerta si no hay ninguna cita seleccionada.
+     */
     @FXML
     private void eliminarCita() {
         ServicioPeluqueria citaSeleccionada = getCitaPeluqueriaSeleccionada();
@@ -156,6 +225,10 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Muestra una nueva ventana con una tabla grande que contiene el historial completo
+     * de todos los servicios de peluquería registrados en la base de datos.
+     */
     @FXML
     private void verHistorial() {
         try {
@@ -224,6 +297,11 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Muestra un diálogo de selección para que el usuario elija una acción de gestión de "pacientes"
+     * (mascotas). Las opciones son agregar, modificar o eliminar.
+     * Este método se relaciona con {@code tablePacientes}, que podría ser redundante con {@code tableClientes}.
+     */
     @FXML
     private void gestionarPacientes() {
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Paciente",
@@ -247,6 +325,10 @@ public class PeluqueriaController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Muestra un diálogo de selección para que el usuario elija una acción de gestión de mascotas
+     * (se refiere a las mascotas en {@code tableClientes}). Las opciones son agregar, modificar o eliminar.
+     */
     @FXML
     private void gestionarMascotas() {
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Agregar Mascota",
@@ -270,11 +352,19 @@ public class PeluqueriaController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Cierra la aplicación.
+     */
     @FXML
     private void salirAplicacion() {
         System.exit(0);
     }
 
+    /**
+     * Muestra una alerta de tipo ERROR con el mensaje proporcionado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta.
+     */
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -282,6 +372,16 @@ public class PeluqueriaController extends Controller implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Muestra un diálogo para agregar o modificar una {@link VisitaVeterinaria}.
+     * Este método parece estar fuera de lugar en un controlador de peluquería,
+     * ya que gestiona visitas veterinarias, no servicios de peluquería.
+     *
+     * @param visita El objeto {@link VisitaVeterinaria} a modificar, o {@code null} si se va a agregar una nueva visita.
+     * @return Un {@link Optional} que contiene la {@link VisitaVeterinaria} resultante si se guarda, o vacío si se cancela.
+     * @deprecated Este método no es coherente con el rol de un controlador de peluquería.
+     */
+    @Deprecated
     private Optional<VisitaVeterinaria> showVisitaVeterinariaDialog(VisitaVeterinaria visita) {
         Dialog<VisitaVeterinaria> dialog = new Dialog<>();
         dialog.setTitle(visita == null ? "Agregar Cita" : "Modificar Cita");
@@ -351,17 +451,17 @@ public class PeluqueriaController extends Controller implements Initializable {
                     nuevaVisita.setObservaciones(observacionesArea.getText());
 
                     if (nuevaVisita.getVeterinaria() == null) {
-                        Usuario veterinarioActual = obtenerVeterinarioActual();
+                        Usuario veterinarioActual = obtenerVeterinarioActual(); // Debería ser peluqueroActual aquí.
                         if (veterinarioActual == null) {
-                            mostrarAlerta("No se ha definido el veterinario actual.");
+                            mostrarAlerta("No se ha definido el peluquero actual.");
                             return null;
                         }
-                        nuevaVisita.setVeterinaria(veterinarioActual);
+                        nuevaVisita.setVeterinaria(veterinarioActual); // Asignando peluquero a un campo de veterinario.
                     }
 
                     return nuevaVisita;
                 } catch (Exception e) {
-                    mostrarAlerta("Error: Verifique que la hora esté en formato HH:mm.");
+                    mostrarAlerta("Error: Verifique que la hora esté en formato HH:mm y todos los campos sean válidos.");
                 }
             }
             return null;
@@ -370,74 +470,94 @@ public class PeluqueriaController extends Controller implements Initializable {
         return dialog.showAndWait();
     }
 
+    /**
+     * Obtiene el usuario actual logueado. Este método se llama "obtenerVeterinarioActual"
+     * pero debería obtener el {@link Usuario} del tipo PELUQUERIA que está logueado.
+     *
+     * @return El {@link Usuario} actual.
+     */
     private Usuario obtenerVeterinarioActual() {
-        return usuarioActual;
+        return usuarioActual; // Retorna el usuario genérico, se debería usar 'peluqueroActual'
     }
 
+    /**
+     * Obtiene el peluquero actual logueado.
+     *
+     * @return El {@link Usuario} del tipo PELUQUERIA que está logueado.
+     */
     private Usuario obtenerPeluqueroActual() {
         return peluqueroActual;
     }
 
+    /**
+     * Inicializa el controlador después de que su elemento raíz ha sido completamente procesado.
+     * Configura las factorías de celdas para todas las columnas de las tablas,
+     * establece listeners para la selección exclusiva entre tablas de citas,
+     * y carga los datos iniciales de citas y mascotas.
+     *
+     * @param url La ubicación utilizada para resolver rutas relativas para el objeto raíz, o null si la ubicación no se conoce.
+     * @param resourceBundle Los recursos utilizados para localizar el objeto raíz, o null si el objeto raíz no fue localizado.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Configuración columnas tabla Citas del Día
         if (colHoraCita != null)
             colHoraCita.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getFechaHora() != null
-                    ? cellData.getValue().getFechaHora().toLocalTime().toString()
-                    : ""
+                    cellData.getValue().getFechaHora() != null
+                            ? cellData.getValue().getFechaHora().toLocalTime().toString()
+                            : ""
             ));
         if (colMascotaCita != null)
             colMascotaCita.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getMascota() != null ? cellData.getValue().getMascota().getNombre() : ""
+                    cellData.getValue().getMascota() != null ? cellData.getValue().getMascota().getNombre() : ""
             ));
         if (colDuenoCita != null)
             colDuenoCita.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getMascota() != null && cellData.getValue().getMascota().getDuenioMascota() != null
-                    ? cellData.getValue().getMascota().getDuenioMascota().getNombreUsuario()
-                    : ""
+                    cellData.getValue().getMascota() != null && cellData.getValue().getMascota().getDuenioMascota() != null
+                            ? cellData.getValue().getMascota().getDuenioMascota().getNombreUsuario()
+                            : ""
             ));
         if (colServicioCita != null)
             colServicioCita.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getTipoServicio()
+                    cellData.getValue().getTipoServicio()
             ));
 
         // Configuración columnas tabla Historial de Servicios
         if (colFechaServicio != null)
             colFechaServicio.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getFechaHora() != null
-                    ? cellData.getValue().getFechaHora().toLocalDate().toString()
-                    : ""
+                    cellData.getValue().getFechaHora() != null
+                            ? cellData.getValue().getFechaHora().toLocalDate().toString()
+                            : ""
             ));
         if (colMascotaServicio != null)
             colMascotaServicio.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getMascota() != null ? cellData.getValue().getMascota().getNombre() : ""
+                    cellData.getValue().getMascota() != null ? cellData.getValue().getMascota().getNombre() : ""
             ));
         if (colTipoServicio != null)
             colTipoServicio.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getTipoServicio()
+                    cellData.getValue().getTipoServicio()
             ));
         if (colPrecioServicio != null)
             colPrecioServicio.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                String.format("%.2f", cellData.getValue().getPrecio())
+                    String.format("%.2f", cellData.getValue().getPrecio())
             ));
 
         // Configuración columnas tabla Clientes
         if (colNombreCliente != null)
             colNombreCliente.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getNombre()
+                    cellData.getValue().getNombre()
             ));
         if (colEspecieCliente != null)
             colEspecieCliente.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getEspecie()
+                    cellData.getValue().getEspecie()
             ));
         if (colRazaCliente != null)
             colRazaCliente.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getRaza()
+                    cellData.getValue().getRaza()
             ));
         if (colDuenoCliente != null)
             colDuenoCliente.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getDuenioMascota() != null ? cellData.getValue().getDuenioMascota().getNombreUsuario() : ""
+                    cellData.getValue().getDuenioMascota() != null ? cellData.getValue().getDuenioMascota().getNombreUsuario() : ""
             ));
 
         // Listeners para selección exclusiva entre tablas de citas
@@ -454,12 +574,20 @@ public class PeluqueriaController extends Controller implements Initializable {
             });
         }
 
-        // Cargar datos iniciales
+        // Cargar datos iniciales (se cargarán de nuevo en onOpen si hay un usuario logueado)
         cargarCitasDelDia();
         cargarHistorialServicios();
         cargarMascotas();
     }
 
+    /**
+     * Método invocado cuando la vista se abre.
+     * Establece el peluquero actual si el input es una instancia de {@link Usuario}
+     * y luego recarga los datos de las tablas.
+     *
+     * @param input El objeto de entrada, que se espera sea una instancia de {@link Usuario}.
+     * @throws IOException Si ocurre un error de E/S.
+     */
     @Override
     public void onOpen(Object input) throws IOException {
         if (input instanceof Usuario) {
@@ -472,11 +600,21 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Método invocado cuando la vista se cierra.
+     * No realiza ninguna acción específica en este controlador.
+     *
+     * @param output El objeto de salida (no utilizado).
+     */
     @Override
     public void onClose(Object output) {
 
     }
 
+    /**
+     * Carga las citas de peluquería programadas para el día actual y para el peluquero actual
+     * en la tabla {@code tableCitasDia}.
+     */
     private void cargarCitasDelDia() {
         if (tableCitasDia != null && peluqueroActual != null) {
             try {
@@ -489,6 +627,10 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Carga el historial de servicios de peluquería realizados por el peluquero actual
+     * en la tabla {@code tableHistorialServicios}.
+     */
     private void cargarHistorialServicios() {
         if (tableHistorialServicios != null && peluqueroActual != null) {
             try {
@@ -501,6 +643,9 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Carga todas las mascotas existentes en la base de datos en la tabla {@code tableClientes}.
+     */
     @FXML
     private void cargarMascotas() {
         if (tableClientes != null) {
@@ -514,19 +659,29 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para agregar un nuevo paciente (mascota).
+     * Este método parece un duplicado de {@code agregarMascota}.
+     * Al confirmar, inserta la nueva mascota en la base de datos y refresca la tabla de pacientes.
+     */
     @FXML
     private void agregarPaciente() {
         Optional<Mascota> result = showMascotaDialog(null);
         result.ifPresent(nuevaMascota -> {
             try {
                 MascotaDAO.insert(nuevaMascota);
-                cargarPacientes();
+                cargarPacientes(); // Refresca tablePacientes
+                cargarMascotas(); // Asegura que tableClientes también se actualice.
             } catch (Exception e) {
                 mostrarAlerta("Error al agregar el paciente: " + e.getMessage());
             }
         });
     }
 
+    /**
+     * Abre un diálogo para modificar la mascota (paciente) seleccionada en {@code tablePacientes}.
+     * Al confirmar, actualiza la mascota en la base de datos y refresca la tabla de pacientes.
+     */
     @FXML
     private void modificarPaciente() {
         Mascota mascotaSeleccionada = tablePacientes.getSelectionModel().getSelectedItem();
@@ -535,7 +690,8 @@ public class PeluqueriaController extends Controller implements Initializable {
             result.ifPresent(mascotaModificada -> {
                 try {
                     MascotaDAO.update(mascotaModificada);
-                    cargarPacientes();
+                    cargarPacientes(); // Refresca tablePacientes
+                    cargarMascotas(); // Asegura que tableClientes también se actualice.
                 } catch (Exception e) {
                     mostrarAlerta("Error al modificar el paciente: " + e.getMessage());
                 }
@@ -545,13 +701,18 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Elimina la mascota (paciente) seleccionada de {@code tablePacientes} de la base de datos
+     * y refresca la tabla.
+     */
     @FXML
     private void eliminarPaciente() {
         Mascota mascotaSeleccionada = tablePacientes.getSelectionModel().getSelectedItem();
         if (mascotaSeleccionada != null) {
             try {
                 MascotaDAO.delete(mascotaSeleccionada.getId());
-                cargarPacientes();
+                cargarPacientes(); // Refresca tablePacientes
+                cargarMascotas(); // Asegura que tableClientes también se actualice.
             } catch (Exception e) {
                 mostrarAlerta("Error al eliminar el paciente: " + e.getMessage());
             }
@@ -560,18 +721,27 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para agregar una nueva mascota.
+     * Este método es llamado desde "gestionarMascotas" y actualiza {@code tableClientes}.
+     */
     private void agregarMascota() {
         Optional<Mascota> result = showMascotaDialog(null);
         result.ifPresent(nuevaMascota -> {
             try {
                 org.quevedo.proyectofinal3ev.DAO.MascotaDAO.insert(nuevaMascota);
-                cargarMascotas();
+                cargarMascotas(); // Refresca tableClientes
+                cargarPacientes(); // Asegura que tablePacientes también se actualice.
             } catch (Exception e) {
                 mostrarAlerta("Error al agregar la mascota: " + e.getMessage());
             }
         });
     }
 
+    /**
+     * Abre un diálogo para modificar la mascota seleccionada en {@code tableClientes}.
+     * Al confirmar, actualiza la mascota en la base de datos y refresca la tabla.
+     */
     private void modificarMascota() {
         Mascota mascotaSeleccionada = tableClientes.getSelectionModel().getSelectedItem();
         if (mascotaSeleccionada != null) {
@@ -579,7 +749,8 @@ public class PeluqueriaController extends Controller implements Initializable {
             result.ifPresent(mascotaModificada -> {
                 try {
                     org.quevedo.proyectofinal3ev.DAO.MascotaDAO.update(mascotaModificada);
-                    cargarMascotas();
+                    cargarMascotas(); // Refresca tableClientes
+                    cargarPacientes(); // Asegura que tablePacientes también se actualice.
                 } catch (Exception e) {
                     mostrarAlerta("Error al modificar la mascota: " + e.getMessage());
                 }
@@ -589,12 +760,17 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Elimina la mascota seleccionada de {@code tableClientes} de la base de datos
+     * y refresca la tabla.
+     */
     private void eliminarMascota() {
         Mascota mascotaSeleccionada = tableClientes.getSelectionModel().getSelectedItem();
         if (mascotaSeleccionada != null) {
             try {
                 org.quevedo.proyectofinal3ev.DAO.MascotaDAO.delete(mascotaSeleccionada.getId());
-                cargarMascotas();
+                cargarMascotas(); // Refresca tableClientes
+                cargarPacientes(); // Asegura que tablePacientes también se actualice.
             } catch (Exception e) {
                 mostrarAlerta("Error al eliminar la mascota: " + e.getMessage());
             }
@@ -603,6 +779,10 @@ public class PeluqueriaController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Abre un diálogo para agregar un nuevo dueño de mascota (usuario de tipo DUENO) a la base de datos.
+     * Muestra alertas si los campos están vacíos o si ocurre un error en la inserción.
+     */
     @FXML
     private void agregarDueno() {
         Dialog<Usuario> dialog = new Dialog<>();
@@ -657,6 +837,11 @@ public class PeluqueriaController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Muestra una alerta de tipo INFORMACIÓN con el mensaje proporcionado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta.
+     */
     private void mostrarInfo(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información");
@@ -664,6 +849,13 @@ public class PeluqueriaController extends Controller implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Muestra un diálogo para agregar o modificar una {@link Mascota}.
+     * Este diálogo permite introducir el nombre, especie, raza, fecha de nacimiento y seleccionar un dueño.
+     *
+     * @param mascota El objeto {@link Mascota} a modificar, o {@code null} si se va a agregar una nueva mascota.
+     * @return Un {@link Optional} que contiene la {@link Mascota} resultante si se guarda, o vacío si se cancela o hay errores de validación.
+     */
     private Optional<Mascota> showMascotaDialog(Mascota mascota) {
         Dialog<Mascota> dialog = new Dialog<>();
         dialog.setTitle(mascota == null ? "Agregar Paciente" : "Modificar Paciente");
@@ -738,6 +930,14 @@ public class PeluqueriaController extends Controller implements Initializable {
         return dialog.showAndWait();
     }
 
+    /**
+     * Muestra un diálogo para agregar o modificar un {@link ServicioPeluqueria}.
+     * Permite introducir la fecha, hora, tipo de servicio, precio y seleccionar una mascota.
+     * Al confirmar, retorna un objeto {@link ServicioPeluqueria} con los datos ingresados.
+     *
+     * @param servicio El objeto {@link ServicioPeluqueria} a modificar, o {@code null} si se va a agregar un nuevo servicio.
+     * @return Un {@link Optional} que contiene el {@link ServicioPeluqueria} resultante si se guarda, o vacío si se cancela o hay errores de validación.
+     */
     private Optional<ServicioPeluqueria> showCitaDialog(ServicioPeluqueria servicio) {
         Dialog<ServicioPeluqueria> dialog = new Dialog<>();
         dialog.setTitle(servicio == null ? "Agregar Cita de Peluquería" : "Modificar Cita de Peluquería");
@@ -747,8 +947,11 @@ public class PeluqueriaController extends Controller implements Initializable {
 
         DatePicker fechaPicker = new DatePicker(servicio != null ? servicio.getFecha() : null);
         TextField horaField = new TextField(servicio != null && servicio.getFechaHora() != null
-                ? servicio.getFechaHora().toLocalTime().toString()
+                ? servicio.getFechaHora().toLocalTime().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))
                 : "");
+        TextField tipoServicioField = new TextField(servicio != null ? servicio.getTipoServicio() : "");
+        TextField precioField = new TextField(servicio != null ? String.valueOf(servicio.getPrecio()) : "");
+
         ComboBox<Mascota> mascotaComboBox = new ComboBox<>();
         List<Mascota> mascotasDisponibles = MascotaDAO.getAllMascotas();
         mascotaComboBox.setItems(FXCollections.observableArrayList(mascotasDisponibles));
@@ -769,9 +972,6 @@ public class PeluqueriaController extends Controller implements Initializable {
         if (servicio != null && servicio.getMascota() != null) {
             mascotaComboBox.getSelectionModel().select(servicio.getMascota());
         }
-
-        TextField tipoServicioField = new TextField(servicio != null ? servicio.getTipoServicio() : "");
-        TextField precioField = new TextField(servicio != null ? String.valueOf(servicio.getPrecio()) : "");
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -796,11 +996,10 @@ public class PeluqueriaController extends Controller implements Initializable {
                     LocalTime hora = LocalTime.parse(horaField.getText());
                     Mascota mascotaSeleccionada = mascotaComboBox.getValue();
                     String tipoServicio = tipoServicioField.getText();
-                    String precioStr = precioField.getText().replaceAll("[^\\d.]", "");
-                    double precio = Double.parseDouble(precioStr);
+                    double precio = Double.parseDouble(precioField.getText());
 
-                    if (mascotaSeleccionada == null || tipoServicio.isEmpty() || fecha == null) {
-                        mostrarAlerta("Todos los campos son obligatorios.");
+                    if (fecha == null || hora == null || mascotaSeleccionada == null || tipoServicio.isEmpty()) {
+                        mostrarAlerta("Todos los campos (excepto precio, que debe ser un número) son obligatorios.");
                         return null;
                     }
 
@@ -812,17 +1011,20 @@ public class PeluqueriaController extends Controller implements Initializable {
                     nuevoServicio.setPrecio(precio);
 
                     if (nuevoServicio.getPeluqueria() == null) {
-                        Usuario peluquero = obtenerPeluqueroActual();
-                        if (peluquero == null) {
-                            mostrarAlerta("No se ha definido el usuario actual.");
+                        if (peluqueroActual == null) {
+                            mostrarAlerta("Error: Peluquero actual no definido. No se puede guardar la cita.");
                             return null;
                         }
-                        nuevoServicio.setPeluqueria(peluquero);
+                        nuevoServicio.setPeluqueria(peluqueroActual);
                     }
 
                     return nuevoServicio;
+                } catch (NumberFormatException e) {
+                    mostrarAlerta("Error: El precio debe ser un número válido.");
+                    return null;
                 } catch (Exception e) {
-                    mostrarAlerta("Error: Verifique que la hora esté en formato HH:mm y el precio sea numérico.");
+                    mostrarAlerta("Error: Verifique que la hora esté en formato HH:mm y todos los campos sean válidos.");
+                    return null;
                 }
             }
             return null;
